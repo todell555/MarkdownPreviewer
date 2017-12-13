@@ -1,0 +1,33 @@
+// some markdown ideas from here: https://guides.github.com/features/mastering-markdown/
+
+let sampleHTML = "# Github style...\n\n---\n I can do *italic*, **bold**,\n`monospace`, ~~strikethrough~~ .\n\nUnordered list:\n\n  * first thing\n  * second thing\n  * one more thing\n\nNumbered list:\n\n  1. you\n  2. get\n  3. the idea\n\n #### You can even [do a link!](https://tracyodell.com)\n\n";
+
+class MarkupConverter extends React.Component {
+  constructor() {
+  super();
+  this.state = { typed: sampleHTML };
+  }
+  
+  handleChange = (event) => {
+    this.setState({typed: event.target.value});
+  };
+
+  render() {
+    return (
+      <div>
+        <h1 id="title">Markdown Previewer</h1>
+        <div class="inputMarkup">
+          <textarea placeholder="Enter markup here..." 
+            value={this.state.typed} onChange= 
+            {this.handleChange.bind(this)} rows="15" cols="40">
+          </textarea>
+        </div>
+        <div class="outputHTML" id="output" onChange={this.handleChange}
+          dangerouslySetInnerHTML={{__html: marked(this.state.typed)}}>
+        </div>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<MarkupConverter />, document.getElementById('app'));
